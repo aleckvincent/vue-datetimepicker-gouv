@@ -9,22 +9,31 @@
                 <div class="arrows next-mth" @click="goToNextMonth">&gt;</div>
             </div>
 
-            <div class="days">
-              <div
-                   v-for="index in amountDays" :key="index"
-                   class="day"
-                   v-bind:class="selectedDay === (index+1) && selectedYear === year && selectedMonth === month ? 'selected' : ''"
-                   @click="onSelectDate(index)"
-              >
-
-                {{ index }}
+            <div class="datepicker__week">
+              <div v-for="weekDay in weekDays" :key="weekDay" class="datepicker__weekday">
+                {{ weekDay }}
               </div>
             </div>
+
+            <div class="datepicker__days">
+              <div class="datepicker__day" :style="{width: getWeekStart() * 41 + 'px'}"></div>
+              <div
+                  v-for="day in amountDays" :key="day"
+                  class="datepicker__day"
+                  v-bind:class="selectedDay === (day+1) && selectedYear === year && selectedMonth === month ? 'selected' : ''"
+                  @click="onSelectDate(day)">
+                {{ day }}
+              </div>
+            </div>
+
+
+
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment';
 export default {
   name: 'DateTimePicker',
   props: {
@@ -35,7 +44,7 @@ export default {
       let day = date.getDate();
       this.month = date.getMonth();
       this.year = date.getFullYear();
-      this.selectedDay = day;
+      this.selectedDay = day+1;
       this.selectedMonth = this.month;
       this.selectedYear = this.year;
       this.currentMonth = this.months[this.month] + ' ' + this.year;
@@ -101,8 +110,11 @@ export default {
           return true;
         }
       }
-
       return false;
+    },
+    getWeekStart() {
+      moment.locale('fr');
+      return moment([this.year, this.month]).weekday();
     }
   },
   data() {
@@ -115,8 +127,9 @@ export default {
       selectedDay: null,
       year: null,
       month: null,
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      amountDays: null
+      months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+      amountDays: null,
+      weekDays: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di']
     }
   }
 }
@@ -149,7 +162,7 @@ h1 span {
 .date-picker {
 	position: relative;
 	width: 100%;
-	max-width: 320px;
+	max-width: 315px;
 	height: 60px;
 	background-color: #FFF;
 	margin: 30px auto;
@@ -214,19 +227,29 @@ h1 span {
 	background-color: #00CA85;
 }
 
-.date-picker .dates .days {
+.date-picker .dates .datepicker__week {
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
-	height: 200px;
+  padding: 0 14px;
 }
-.date-picker .dates .days .day { 
+/*.date-picker .dates .datepicker__week .datepicker__day {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: #313131;
 }
-.date-picker .dates .days .day.selected {
-	background-color: #00CA85;
+
+}*/
+
+.datepicker__day.selected {
+  color: #00CA85;
+}
+
+.datepicker__day {
+  height: 41px;
+  width: 41px;
+  float: left;
+  text-align: center;
 }
 
 </style>
