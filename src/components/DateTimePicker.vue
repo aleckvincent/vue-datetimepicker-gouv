@@ -1,7 +1,6 @@
 <template>
   <div class="date-picker" @click="toggleDatePicker($event)">
         <div class="selected-date" :data-value="selectedDateValue">{{ selectedDate }}</div>
-
         <div class="dates" ref="dates">
             <div class="month">
                 <div class="arrows prev-mth" @click="goToPrevMonth">&lt;</div>
@@ -25,9 +24,6 @@
                 {{ day }}
               </div>
             </div>
-
-
-
         </div>
     </div>
 </template>
@@ -136,40 +132,23 @@ export default {
 </script>
 
 <style scoped>
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-body {
-	background-color: #FFCE00;
-	font-family: 'Saira', Arial, Helvetica, sans-serif;
-}
-
-h1 {
-	margin: 30px 0px;
-	color: #313131;
-	font-size: 42px;
-	font-weight: 900;
-	text-align: center;
-}
-
-h1 span {
-	font-weight: 300;
+@font-face {
+  font-family: "Marianne";
+  src: url('../assets/fonts/Marianne-Regular.woff') format("woff2"),
+  url('../assets/fonts/Marianne-Regular.woff2') format("woff");
 }
 
 .date-picker {
 	position: relative;
 	width: 100%;
 	max-width: 315px;
-	height: 60px;
+	height: 40px;
 	background-color: #FFF;
 	margin: 30px auto;
-	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-
+  border-radius: 4px 4px 0 0;
 	cursor: pointer;
 	user-select: none;
+  font-family: 'Marianne', sans-serif;
 }
 
 .date-picker:hover {
@@ -178,14 +157,14 @@ h1 span {
 
 .date-picker .selected-date {
 	width: 100%;
-	height: 100%;
+	height: 40px;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-	color: #313131;
-	font-size: 28px;
+	color: #1E1E1E;
+	font-size: 16px;
 }
 
 .date-picker .dates {
@@ -200,13 +179,15 @@ h1 span {
 
 .date-picker .dates.active {
 	display: block;
+  box-shadow: 0px 3px 10px #00000029;
+  padding: 5px;
 }
 
 .date-picker .dates .month {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 2px solid #EEE;
+  margin-bottom: 20px;
 }
 
 .date-picker .dates .month .arrows {
@@ -219,37 +200,26 @@ h1 span {
 	font-size: 20px;
 }
 
-.date-picker .dates .month .arrows:hover {
-	background-color: #F3F3F3;
-}
-
-.date-picker .dates .month .arrows:active {
-	background-color: #00CA85;
-}
-
 .date-picker .dates .datepicker__week {
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
   padding: 0 14px;
 }
-/*.date-picker .dates .datepicker__week .datepicker__day {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: #313131;
-}
-
-}*/
 
 .datepicker__day.selected {
-  color: #00CA85;
+  color: #1E1E1E;
+  background-color: #9A9AFF;
+  border-radius: 50%;
+  font-size: 14px;
 }
 
 .datepicker__day {
-  height: 41px;
+  height: 31px;
   width: 41px;
   float: left;
   text-align: center;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
 </style>
